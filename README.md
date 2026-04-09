@@ -1,4 +1,4 @@
-# 💍 Sam & Sofia Wedding Invitation Website
+# 💍 Vignesh Kumar & Venmani Sekar Wedding Invitation Website
 
 A premium, mobile-first, interactive wedding invitation website featuring Modern European Elegance design with Burgundy, Cream/Ivory, and Gold color palette.
 
@@ -6,7 +6,7 @@ A premium, mobile-first, interactive wedding invitation website featuring Modern
 
 ### Interactive Elements
 - **Curtain Reveal**: Swipe or drag the red velvet curtains to reveal the couple's names with confetti burst
-- **Scratch-to-Reveal Date**: Scratch three gold circles to reveal the wedding date (10 / Sept / 2027)
+- **Scratch-to-Reveal Date**: Scratch three gold circles to reveal the wedding date (08 / May / 2026)
 - **Live Countdown Timer**: Real-time countdown to the wedding day
 - **Interactive Map**: Click the hand-drawn villa illustration to open Google Maps
 - **Animated Dress Code**: Visual gallery with elegant fashion illustrations
@@ -57,11 +57,17 @@ Edit CSS custom properties in `styles.css` (lines 6-14):
 
 ### Wedding Details
 Update in `index.html`:
-- **Couple Names**: Lines 38-40
-- **Wedding Date**: Line 56 (display) and `script.js` line 318 (countdown)
-- **Venue Details**: Lines 127-131
+- **Couple Names**: Lines 46-48
+- **Wedding Date**: Lines 71-83 (display) and `script.js` line 318 (countdown)
+- **Venue Details**: Lines 144-146
 
-### RSVP Form Backend
+### RSVP Form
+The form includes:
+- Full Name (required)
+- Email Address (required)
+- Attendance (Yes/No)
+- Number of Guests (shown only if attending)
+
 The form currently logs data to console. To connect to a backend:
 
 1. **Option 1 - Formspree** (Easiest):
@@ -152,5 +158,5 @@ This is a custom wedding invitation template. Feel free to use and modify for yo
 
 ---
 
-**Made with ❤️ for Sam & Sofia**  
-*September 10, 2027 | Villa Medicea di Artimino, Italy*
+**Made with ❤️ for Vignesh Kumar & Venmani Sekar**
+*May 08, 2026 | ECR Mahal, Veppampattu, Chennai*
