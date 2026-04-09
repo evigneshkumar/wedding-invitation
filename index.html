@@ -26,15 +26,79 @@
     <!-- Curtain Reveal Section -->
     <section id="curtainSection" class="curtain-section">
         <div class="curtain-container">
-            <div class="curtain curtain-left" id="curtainLeft">
-                <div class="curtain-texture"></div>
-            </div>
-            <div class="curtain curtain-right" id="curtainRight">
-                <div class="curtain-texture"></div>
-            </div>
+            <!-- Left Curtain with Realistic Folds -->
+            <svg class="curtain curtain-left" id="curtainLeft" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <defs>
+                    <linearGradient id="velvetGradientLeft" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#3d0000;stop-opacity:1" />
+                        <stop offset="15%" style="stop-color:#5c0000;stop-opacity:1" />
+                        <stop offset="30%" style="stop-color:#800020;stop-opacity:1" />
+                        <stop offset="45%" style="stop-color:#5c0000;stop-opacity:1" />
+                        <stop offset="60%" style="stop-color:#800020;stop-opacity:1" />
+                        <stop offset="75%" style="stop-color:#5c0000;stop-opacity:1" />
+                        <stop offset="90%" style="stop-color:#800020;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#3d0000;stop-opacity:1" />
+                    </linearGradient>
+                    <filter id="velvetTexture">
+                        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" result="noise"/>
+                        <feDiffuseLighting in="noise" lighting-color="#800020" surfaceScale="2">
+                            <feDistantLight azimuth="45" elevation="60"/>
+                        </feDiffuseLighting>
+                    </filter>
+                </defs>
+                <!-- Main curtain body with folds -->
+                <path class="curtain-fold" d="M 0,0 Q 8,10 10,0 Q 18,10 20,0 Q 28,10 30,0 Q 38,10 40,0 Q 48,10 50,0 Q 58,10 60,0 Q 68,10 70,0 Q 78,10 80,0 Q 88,10 90,0 Q 98,10 100,0 L 100,100 Q 92,95 90,100 Q 82,95 80,100 Q 72,95 70,100 Q 62,95 60,100 Q 52,95 50,100 Q 42,95 40,100 Q 32,95 30,100 Q 22,95 20,100 Q 12,95 10,100 Q 2,95 0,100 Z"
+                      fill="url(#velvetGradientLeft)"
+                      filter="url(#velvetTexture)"
+                      opacity="0.95"/>
+                <!-- Shadow folds for depth -->
+                <path d="M 10,0 Q 10,50 10,100" stroke="#000" stroke-width="0.5" opacity="0.3" fill="none"/>
+                <path d="M 30,0 Q 30,50 30,100" stroke="#000" stroke-width="0.5" opacity="0.3" fill="none"/>
+                <path d="M 50,0 Q 50,50 50,100" stroke="#000" stroke-width="0.5" opacity="0.3" fill="none"/>
+                <path d="M 70,0 Q 70,50 70,100" stroke="#000" stroke-width="0.5" opacity="0.3" fill="none"/>
+                <path d="M 90,0 Q 90,50 90,100" stroke="#000" stroke-width="0.5" opacity="0.3" fill="none"/>
+                <!-- Highlight folds for realism -->
+                <path d="M 20,0 Q 20,50 20,100" stroke="#a0304a" stroke-width="0.3" opacity="0.4" fill="none"/>
+                <path d="M 40,0 Q 40,50 40,100" stroke="#a0304a" stroke-width="0.3" opacity="0.4" fill="none"/>
+                <path d="M 60,0 Q 60,50 60,100" stroke="#a0304a" stroke-width="0.3" opacity="0.4" fill="none"/>
+                <path d="M 80,0 Q 80,50 80,100" stroke="#a0304a" stroke-width="0.3" opacity="0.4" fill="none"/>
+            </svg>
+            
+            <!-- Right Curtain with Realistic Folds -->
+            <svg class="curtain curtain-right" id="curtainRight" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <defs>
+                    <linearGradient id="velvetGradientRight" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#3d0000;stop-opacity:1" />
+                        <stop offset="10%" style="stop-color:#800020;stop-opacity:1" />
+                        <stop offset="25%" style="stop-color:#5c0000;stop-opacity:1" />
+                        <stop offset="40%" style="stop-color:#800020;stop-opacity:1" />
+                        <stop offset="55%" style="stop-color:#5c0000;stop-opacity:1" />
+                        <stop offset="70%" style="stop-color:#800020;stop-opacity:1" />
+                        <stop offset="85%" style="stop-color:#5c0000;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#3d0000;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <!-- Main curtain body with folds -->
+                <path class="curtain-fold" d="M 0,0 Q 8,10 10,0 Q 18,10 20,0 Q 28,10 30,0 Q 38,10 40,0 Q 48,10 50,0 Q 58,10 60,0 Q 68,10 70,0 Q 78,10 80,0 Q 88,10 90,0 Q 98,10 100,0 L 100,100 Q 92,95 90,100 Q 82,95 80,100 Q 72,95 70,100 Q 62,95 60,100 Q 52,95 50,100 Q 42,95 40,100 Q 32,95 30,100 Q 22,95 20,100 Q 12,95 10,100 Q 2,95 0,100 Z"
+                      fill="url(#velvetGradientRight)"
+                      filter="url(#velvetTexture)"
+                      opacity="0.95"/>
+                <!-- Shadow folds for depth -->
+                <path d="M 10,0 Q 10,50 10,100" stroke="#000" stroke-width="0.5" opacity="0.3" fill="none"/>
+                <path d="M 30,0 Q 30,50 30,100" stroke="#000" stroke-width="0.5" opacity="0.3" fill="none"/>
+                <path d="M 50,0 Q 50,50 50,100" stroke="#000" stroke-width="0.5" opacity="0.3" fill="none"/>
+                <path d="M 70,0 Q 70,50 70,100" stroke="#000" stroke-width="0.5" opacity="0.3" fill="none"/>
+                <path d="M 90,0 Q 90,50 90,100" stroke="#000" stroke-width="0.5" opacity="0.3" fill="none"/>
+                <!-- Highlight folds for realism -->
+                <path d="M 20,0 Q 20,50 20,100" stroke="#a0304a" stroke-width="0.3" opacity="0.4" fill="none"/>
+                <path d="M 40,0 Q 40,50 40,100" stroke="#a0304a" stroke-width="0.3" opacity="0.4" fill="none"/>
+                <path d="M 60,0 Q 60,50 60,100" stroke="#a0304a" stroke-width="0.3" opacity="0.4" fill="none"/>
+                <path d="M 80,0 Q 80,50 80,100" stroke="#a0304a" stroke-width="0.3" opacity="0.4" fill="none"/>
+            </svg>
+            
             <div class="curtain-content">
                 <div class="swipe-instruction">
-                    <p>Swipe to Open</p>
+                    <p>Drag to Reveal</p>
                     <svg class="swipe-icon" width="40" height="40" viewBox="0 0 40 40">
                         <path d="M10 20 L20 10 L30 20 M10 20 L20 30 L30 20" stroke="currentColor" fill="none" stroke-width="2"/>
                     </svg>
@@ -93,7 +157,7 @@
                 <h2 class="section-title">Counting Down</h2>
                 <div class="countdown-timer" id="countdown">
                     <div class="countdown-item">
-                        <span class="countdown-value" id="days">000</span>
+                        <span class="countdown-value" id="days">00</span>
                         <span class="countdown-label">Days</span>
                     </div>
                     <div class="countdown-item">
@@ -117,33 +181,56 @@
             <div class="container">
                 <h2 class="section-title">The Venue</h2>
                 <div class="venue-content">
-                    <div class="venue-illustration" id="venueMap">
-                        <svg class="villa-illustration" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Villa Building -->
-                            <rect x="100" y="120" width="200" height="120" fill="#f5f5dc" stroke="#8b4513" stroke-width="2"/>
-                            <!-- Roof -->
-                            <polygon points="90,120 200,60 310,120" fill="#8b0000" stroke="#5c0000" stroke-width="2"/>
-                            <!-- Windows -->
-                            <rect x="130" y="150" width="30" height="40" fill="#4a4a4a" stroke="#2a2a2a" stroke-width="1"/>
-                            <rect x="185" y="150" width="30" height="40" fill="#4a4a4a" stroke="#2a2a2a" stroke-width="1"/>
-                            <rect x="240" y="150" width="30" height="40" fill="#4a4a4a" stroke="#2a2a2a" stroke-width="1"/>
-                            <!-- Door -->
-                            <rect x="175" y="200" width="50" height="40" fill="#5c3317" stroke="#3a1f0f" stroke-width="2"/>
-                            <!-- Trees -->
-                            <circle cx="50" cy="180" r="25" fill="#228b22"/>
-                            <rect x="45" y="180" width="10" height="60" fill="#8b4513"/>
-                            <circle cx="350" cy="180" r="25" fill="#228b22"/>
-                            <rect x="345" y="180" width="10" height="60" fill="#8b4513"/>
-                            <!-- Ground -->
-                            <rect x="0" y="240" width="400" height="60" fill="#90ee90"/>
-                            <!-- Click indicator -->
-                            <text x="200" y="280" text-anchor="middle" fill="#8b0000" font-size="14" font-weight="bold">Click to view on map</text>
-                        </svg>
-                    </div>
+                    <a href="https://maps.app.goo.gl/dB1YkiduvrD4fQXH8" target="_blank" rel="noopener noreferrer" class="venue-image-link" id="venueMap">
+                        <img src="assets/images/location.png" alt="ECR Mahal Venue" class="venue-image">
+                        <div class="venue-overlay">
+                            <span class="map-indicator">📍 View on Google Maps</span>
+                        </div>
+                    </a>
                     <div class="venue-details">
                         <h3>ECR Mahal</h3>
                         <p class="venue-address">Veppampattu<br>Chennai, Tamil Nadu, India</p>
-                        <p class="venue-description">An elegant venue along the scenic East Coast Road, offering a perfect blend of traditional charm and modern amenities.</p>
+                        <p class="venue-description">A magnificent venue along the scenic East Coast Road, featuring grand architecture, lush gardens, and breathtaking views. The perfect setting for an unforgettable celebration.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Events Schedule Section -->
+        <section class="events-section section-animate">
+            <div class="container">
+                <h2 class="section-title">Wedding Events</h2>
+                <p class="events-subtitle">Join us for a day of celebration</p>
+                <div class="events-timeline">
+                    <div class="event-card">
+                        <div class="event-icon">
+                            <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="30" cy="30" r="28" stroke="currentColor" stroke-width="2" fill="none"/>
+                                <path d="M30 15 L30 30 L40 35" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <div class="event-details">
+                            <h3 class="event-title">Marriage Ceremony</h3>
+                            <p class="event-time">⏰ 6:00 AM - 7:30 AM</p>
+                            <p class="event-description">Traditional wedding ceremony with family and close friends. Witness the sacred union as we exchange vows.</p>
+                        </div>
+                    </div>
+                    <div class="event-divider">
+                        <div class="divider-line"></div>
+                        <div class="divider-dot"></div>
+                    </div>
+                    <div class="event-card">
+                        <div class="event-icon">
+                            <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="30" cy="30" r="28" stroke="currentColor" stroke-width="2" fill="none"/>
+                                <path d="M20 30 L25 35 L40 20" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="event-details">
+                            <h3 class="event-title">Wedding Reception</h3>
+                            <p class="event-time">⏰ 10:00 AM Onwards</p>
+                            <p class="event-description">Celebrate with us at the grand reception! Enjoy delicious food, music, and dancing as we begin our new journey together.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -184,41 +271,16 @@
         <section class="rsvp-section section-animate">
             <div class="container">
                 <h2 class="section-title">RSVP</h2>
-                <p class="rsvp-subtitle">Kindly respond by April 15, 2026</p>
-                <form id="rsvpForm" class="rsvp-form">
-                    <div class="form-group">
-                        <label for="guestName">Full Name *</label>
-                        <input type="text" id="guestName" name="guestName" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email Address *</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Will you be attending? *</label>
-                        <div class="radio-group">
-                            <label class="radio-label">
-                                <input type="radio" name="attendance" value="yes" required>
-                                <span>Joyfully Accept</span>
-                            </label>
-                            <label class="radio-label">
-                                <input type="radio" name="attendance" value="no">
-                                <span>Regretfully Decline</span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group" id="guestCountGroup" style="display: none;">
-                        <label for="guestCount">Number of Guests</label>
-                        <select id="guestCount" name="guestCount">
-                            <option value="1">1 Guest</option>
-                            <option value="2">2 Guests</option>
-                            <option value="3">3 Guests</option>
-                            <option value="4">4 Guests</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="submit-btn">Send RSVP</button>
-                    <div id="formMessage" class="form-message"></div>
-                </form>
+                <p class="rsvp-subtitle">Kindly respond by April 31, 2026</p>
+                <div class="rsvp-content">
+                    <p class="rsvp-message">We would be honored by your presence at our wedding celebration. Please let us know if you can join us!</p>
+                    <a href="https://forms.gle/Rkmwy5rXstRxsTgp9" target="_blank" rel="noopener noreferrer" class="rsvp-button">
+                        <span>Complete RSVP Form</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 10h10M10 5l5 5-5 5"/>
+                        </svg>
+                    </a>
+                </div>
             </div>
         </section>
 

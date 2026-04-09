@@ -28,44 +28,91 @@ const curtainLeft = document.getElementById('curtainLeft');
 const curtainRight = document.getElementById('curtainRight');
 const revealContent = document.getElementById('revealContent');
 const confettiCanvas = document.getElementById('confettiCanvas');
+const curtainContent = document.querySelector('.curtain-content');
 
 let isDragging = false;
 let startX = 0;
 let currentX = 0;
+let dragProgress = 0;
 
-// Mouse/Touch Events for Curtain
+// Mouse/Touch Events for Curtain with Fluid Physics
 function handleStart(e) {
     if (curtainOpened) return;
     isDragging = true;
     startX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
     curtainLeft.style.cursor = 'grabbing';
     curtainRight.style.cursor = 'grabbing';
+    curtainLeft.classList.add('dragging');
+    curtainRight.classList.add('dragging');
 }
 
 function handleMove(e) {
     if (!isDragging || curtainOpened) return;
     
+    e.preventDefault();
     currentX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
     const deltaX = currentX - startX;
+    const windowWidth = window.innerWidth;
     
-    // Only allow opening (dragging apart)
-    if (Math.abs(deltaX) > 50) {
+    // Calculate drag progress (0 to 1)
+    dragProgress = Math.min(Math.abs(deltaX) / (windowWidth * 0.3), 1);
+    
+    // Apply organic transform with fabric stretch effect
+    const leftTransform = -dragProgress * 100;
+    const rightTransform = dragProgress * 100;
+    const stretch = 1 + (dragProgress * 0.1);
+    const skew = dragProgress * 2;
+    
+    curtainLeft.style.transform = `translateX(${leftTransform}%) scaleX(${stretch}) skewX(-${skew}deg)`;
+    curtainRight.style.transform = `translateX(${rightTransform}%) scaleX(${stretch}) skewX(${skew}deg)`;
+    
+    // Trigger opening when dragged enough
+    if (dragProgress > 0.4) {
         openCurtains();
     }
 }
 
 function handleEnd() {
+    if (!curtainOpened && isDragging) {
+        // Snap back with elastic effect if not opened
+        curtainLeft.style.transition = 'transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+        curtainRight.style.transition = 'transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+        curtainLeft.style.transform = 'translateX(0) scaleX(1) skewX(0deg)';
+        curtainRight.style.transform = 'translateX(0) scaleX(1) skewX(0deg)';
+        
+        setTimeout(() => {
+            curtainLeft.style.transition = '';
+            curtainRight.style.transition = '';
+        }, 800);
+    }
+    
     isDragging = false;
     curtainLeft.style.cursor = 'grab';
     curtainRight.style.cursor = 'grab';
+    curtainLeft.classList.remove('dragging');
+    curtainRight.classList.remove('dragging');
+    dragProgress = 0;
 }
 
 function openCurtains() {
     if (curtainOpened) return;
     
     curtainOpened = true;
+    
+    // Remove dragging class and reset transitions
+    curtainLeft.classList.remove('dragging');
+    curtainRight.classList.remove('dragging');
+    curtainLeft.style.transition = '';
+    curtainRight.style.transition = '';
+    
+    // Add open class for animation
     curtainLeft.classList.add('open');
     curtainRight.classList.add('open');
+    
+    // Hide swipe instruction immediately
+    if (curtainContent) {
+        curtainContent.classList.add('hidden');
+    }
     
     // Show reveal content after curtain animation
     setTimeout(() => {
@@ -81,7 +128,7 @@ function openCurtains() {
             audioToggle.classList.add('playing');
             audioPlaying = true;
         }
-    }, 600);
+    }, 900);
 }
 
 // Add event listeners for curtain
@@ -325,74 +372,17 @@ setInterval(updateCountdown, 1000);
 // ===================================
 const venueMap = document.getElementById('venueMap');
 
-venueMap.addEventListener('click', () => {
-    const googleMapsUrl = 'https://www.google.com/maps/search/?api=1&query=ECR+Mahal+Veppampattu+Chennai';
-    window.open(googleMapsUrl, '_blank');
-});
-
-// Add hover effect
-venueMap.style.cursor = 'pointer';
+if (venueMap) {
+    // The venue map is now a link, so we don't need to add click handler
+    // The link will handle navigation to Google Maps
+    venueMap.style.cursor = 'pointer';
+}
 
 // ===================================
-// RSVP Form
+// RSVP Section
 // ===================================
-const rsvpForm = document.getElementById('rsvpForm');
-const attendanceRadios = document.querySelectorAll('input[name="attendance"]');
-const guestCountGroup = document.getElementById('guestCountGroup');
-const formMessage = document.getElementById('formMessage');
-
-// Show/hide additional fields based on attendance
-attendanceRadios.forEach(radio => {
-    radio.addEventListener('change', (e) => {
-        if (e.target.value === 'yes') {
-            guestCountGroup.style.display = 'block';
-        } else {
-            guestCountGroup.style.display = 'none';
-        }
-    });
-});
-
-// Form submission
-rsvpForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    const formData = new FormData(rsvpForm);
-    const data = Object.fromEntries(formData);
-    
-    // Simulate form submission (in production, send to backend)
-    console.log('RSVP Data:', data);
-    
-    // Show success message
-    formMessage.textContent = 'Thank you for your RSVP! We look forward to celebrating with you.';
-    formMessage.className = 'form-message success';
-    
-    // Reset form after 3 seconds
-    setTimeout(() => {
-        rsvpForm.reset();
-        formMessage.style.display = 'none';
-        guestCountGroup.style.display = 'none';
-    }, 3000);
-    
-    // In production, you would send data to a backend:
-    /*
-    fetch('/api/rsvp', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
-    .then(response => response.json())
-    .then(data => {
-        formMessage.textContent = 'Thank you for your RSVP!';
-        formMessage.className = 'form-message success';
-    })
-    .catch(error => {
-        formMessage.textContent = 'Something went wrong. Please try again.';
-        formMessage.className = 'form-message error';
-    });
-    */
-});
+// RSVP is now handled via Google Forms link
+// No form validation needed as it's an external link
 
 // ===================================
 // Scroll Animations with Intersection Observer
@@ -420,33 +410,7 @@ animatedSections.forEach(section => {
 // ===================================
 // Parallax Effect
 // ===================================
-let ticking = false;
-
-function updateParallax() {
-    const scrolled = window.pageYOffset;
-    
-    // Parallax for venue illustration
-    const venueSection = document.querySelector('.venue-section');
-    if (venueSection) {
-        const venueIllustration = document.querySelector('.villa-illustration');
-        const venueOffset = venueSection.offsetTop;
-        const venueScroll = scrolled - venueOffset;
-        
-        if (venueScroll > -window.innerHeight && venueScroll < window.innerHeight) {
-            const parallaxValue = venueScroll * 0.3;
-            venueIllustration.style.transform = `translateY(${parallaxValue}px)`;
-        }
-    }
-    
-    ticking = false;
-}
-
-window.addEventListener('scroll', () => {
-    if (!ticking) {
-        window.requestAnimationFrame(updateParallax);
-        ticking = true;
-    }
-});
+// Parallax effect removed to prevent venue image from moving out of position
 
 // ===================================
 // Smooth Scroll for Internal Links
@@ -502,4 +466,3 @@ console.log('%c💍 Vignesh Kumar & Venmani Sekar Wedding Invitation 💍', 'fon
 console.log('%cMay 08, 2026', 'font-size: 14px; color: #800020;');
 console.log('%cECR Mahal, Veppampattu, Chennai', 'font-size: 12px; color: #2a2a2a;');
 
-// Made with Bob

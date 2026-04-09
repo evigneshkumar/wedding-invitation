@@ -123,7 +123,7 @@ p {
     width: 100%;
     height: 100vh;
     overflow: hidden;
-    background: var(--charcoal);
+    background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
 }
 
 .curtain-container {
@@ -137,10 +137,10 @@ p {
     position: absolute;
     width: 50%;
     height: 100%;
-    background: linear-gradient(135deg, var(--burgundy) 0%, var(--burgundy-dark) 100%);
-    transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: grab;
     z-index: 10;
+    transition: transform 1.8s cubic-bezier(0.23, 1, 0.32, 1);
+    will-change: transform;
 }
 
 .curtain:active {
@@ -149,34 +149,86 @@ p {
 
 .curtain-left {
     left: 0;
-    transform-origin: left;
+    transform-origin: left center;
 }
 
 .curtain-right {
     right: 0;
-    transform-origin: right;
+    transform-origin: right center;
 }
 
+/* Organic opening animation with fabric stretch */
 .curtain.open.curtain-left {
-    transform: translateX(-100%);
+    transform: translateX(-100%) scaleX(1.1);
+    animation: curtainWaveLeft 1.8s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .curtain.open.curtain-right {
-    transform: translateX(100%);
+    transform: translateX(100%) scaleX(1.1);
+    animation: curtainWaveRight 1.8s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.curtain-texture {
-    width: 100%;
-    height: 100%;
-    background-image: 
-        repeating-linear-gradient(
-            90deg,
-            transparent,
-            transparent 10px,
-            rgba(0, 0, 0, 0.1) 10px,
-            rgba(0, 0, 0, 0.1) 11px
-        );
-    opacity: 0.5;
+/* Fabric fold animation for left curtain */
+@keyframes curtainWaveLeft {
+    0% {
+        transform: translateX(0) scaleX(1) skewX(0deg);
+    }
+    15% {
+        transform: translateX(-10%) scaleX(1.05) skewX(-2deg);
+    }
+    30% {
+        transform: translateX(-25%) scaleX(1.08) skewX(-3deg);
+    }
+    50% {
+        transform: translateX(-50%) scaleX(1.12) skewX(-1deg);
+    }
+    70% {
+        transform: translateX(-75%) scaleX(1.15) skewX(1deg);
+    }
+    85% {
+        transform: translateX(-90%) scaleX(1.12) skewX(2deg);
+    }
+    100% {
+        transform: translateX(-100%) scaleX(1.1) skewX(0deg);
+    }
+}
+
+/* Fabric fold animation for right curtain */
+@keyframes curtainWaveRight {
+    0% {
+        transform: translateX(0) scaleX(1) skewX(0deg);
+    }
+    15% {
+        transform: translateX(10%) scaleX(1.05) skewX(2deg);
+    }
+    30% {
+        transform: translateX(25%) scaleX(1.08) skewX(3deg);
+    }
+    50% {
+        transform: translateX(50%) scaleX(1.12) skewX(1deg);
+    }
+    70% {
+        transform: translateX(75%) scaleX(1.15) skewX(-1deg);
+    }
+    85% {
+        transform: translateX(90%) scaleX(1.12) skewX(-2deg);
+    }
+    100% {
+        transform: translateX(100%) scaleX(1.1) skewX(0deg);
+    }
+}
+
+/* Dragging state - add subtle wave effect */
+.curtain.dragging {
+    transition: none;
+}
+
+.curtain-fold {
+    transition: all 0.3s ease;
+}
+
+.curtain:hover .curtain-fold {
+    filter: brightness(1.1);
 }
 
 .curtain-content {
@@ -186,6 +238,12 @@ p {
     transform: translate(-50%, -50%);
     z-index: 15;
     text-align: center;
+    transition: opacity 0.5s ease;
+}
+
+.curtain-content.hidden {
+    opacity: 0;
+    pointer-events: none;
 }
 
 .swipe-instruction {
@@ -384,6 +442,7 @@ section {
     cursor: pointer;
     border-radius: 10px;
     box-shadow: 0 8px 20px rgba(128, 0, 32, 0.2);
+    z-index: 2;
 }
 
 .scratch-reveal {
@@ -401,6 +460,7 @@ section {
     background: var(--cream);
     border-radius: 10px;
     border: 3px solid var(--gold);
+    z-index: 1;
 }
 
 .scratch-label {
@@ -477,25 +537,55 @@ section {
     align-items: center;
 }
 
-.venue-illustration {
+.venue-image-link {
     position: relative;
+    display: block;
     cursor: pointer;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(128, 0, 32, 0.2);
     transition: var(--transition-smooth);
 }
 
-.venue-illustration:hover {
+.venue-image-link:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(212, 175, 55, 0.4);
+}
+
+.venue-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: var(--transition-smooth);
+}
+
+.venue-image-link:hover .venue-image {
     transform: scale(1.05);
 }
 
-.villa-illustration {
-    width: 100%;
-    height: auto;
-    filter: drop-shadow(0 10px 30px rgba(128, 0, 32, 0.2));
+.venue-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(128, 0, 32, 0.9), transparent);
+    padding: var(--spacing-md);
+    transform: translateY(100%);
     transition: var(--transition-smooth);
 }
 
-.venue-illustration:hover .villa-illustration {
-    filter: drop-shadow(0 15px 40px rgba(212, 175, 55, 0.4));
+.venue-image-link:hover .venue-overlay {
+    transform: translateY(0);
+}
+
+.map-indicator {
+    color: var(--gold);
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
 }
 
 .venue-details {
@@ -516,6 +606,104 @@ section {
 .venue-description {
     color: var(--charcoal);
     line-height: 1.8;
+}
+
+/* ===================================
+   Events Schedule Section
+   =================================== */
+.events-section {
+    background: var(--burgundy);
+    color: var(--cream);
+}
+
+.events-section .section-title {
+    color: var(--gold);
+}
+
+.events-subtitle {
+    text-align: center;
+    color: var(--cream);
+    font-size: 1.3rem;
+    margin-bottom: var(--spacing-lg);
+    font-style: italic;
+}
+
+.events-timeline {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.event-card {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: flex-start;
+    background: rgba(255, 255, 255, 0.1);
+    padding: var(--spacing-md);
+    border-radius: 15px;
+    border: 2px solid var(--gold);
+    backdrop-filter: blur(10px);
+    transition: var(--transition-smooth);
+}
+
+.event-card:hover {
+    transform: translateX(10px);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+}
+
+.event-icon {
+    flex-shrink: 0;
+    color: var(--gold);
+    width: 60px;
+    height: 60px;
+}
+
+.event-details {
+    flex: 1;
+}
+
+.event-title {
+    color: var(--gold);
+    font-size: 1.8rem;
+    margin-bottom: var(--spacing-xs);
+    font-family: var(--font-serif);
+}
+
+.event-time {
+    color: var(--gold-light);
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+}
+
+.event-description {
+    color: var(--cream);
+    line-height: 1.8;
+    font-size: 1rem;
+}
+
+.event-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: var(--spacing-md) 0;
+    position: relative;
+}
+
+.divider-line {
+    width: 2px;
+    height: 40px;
+    background: var(--gold);
+    opacity: 0.5;
+}
+
+.divider-dot {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: var(--gold);
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.3);
 }
 
 /* ===================================
@@ -593,6 +781,51 @@ section {
     color: var(--cream);
     margin-bottom: var(--spacing-lg);
     font-style: italic;
+}
+
+.rsvp-content {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.rsvp-message {
+    color: var(--cream);
+    font-size: 1.2rem;
+    line-height: 1.8;
+    margin-bottom: var(--spacing-lg);
+}
+
+.rsvp-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.25rem 3rem;
+    background: var(--gold);
+    color: var(--burgundy);
+    text-decoration: none;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    font-family: var(--font-sans);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: var(--transition-fast);
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+}
+
+.rsvp-button:hover {
+    background: var(--gold-light);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(212, 175, 55, 0.5);
+}
+
+.rsvp-button svg {
+    transition: var(--transition-fast);
+}
+
+.rsvp-button:hover svg {
+    transform: translateX(5px);
 }
 
 .rsvp-form {
@@ -780,6 +1013,15 @@ section {
     .scratch-reveal {
         font-size: 2.5rem;
     }
+    
+    .event-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .event-icon {
+        margin: 0 auto;
+    }
 }
 
 @media (max-width: 480px) {
@@ -823,4 +1065,3 @@ textarea:focus-visible {
     outline-offset: 2px;
 }
 
-/* Made with Bob */
