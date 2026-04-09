@@ -1,7 +1,6 @@
 // ===================================
 // Global Variables
 // ===================================
-let curtainOpened = false;
 let audioPlaying = false;
 
 // ===================================
@@ -22,99 +21,44 @@ audioToggle.addEventListener('click', () => {
 });
 
 // ===================================
-// Curtain Reveal Effect
+// Curtain Reveal Effect with GSAP
 // ===================================
-const curtainLeft = document.getElementById('curtainLeft');
-const curtainRight = document.getElementById('curtainRight');
+gsap.registerPlugin(Draggable);
+
+const leftCurtain = document.querySelector("#leftCurtain");
+const rightCurtain = document.querySelector("#rightCurtain");
+const leftCurtainPath = document.querySelector("#leftCurtainPath");
+const rightCurtainPath = document.querySelector("#rightCurtainPath");
 const revealContent = document.getElementById('revealContent');
 const confettiCanvas = document.getElementById('confettiCanvas');
-const curtainContent = document.querySelector('.curtain-content');
+const stage = document.getElementById('stage');
 
-let isDragging = false;
-let startX = 0;
-let currentX = 0;
-let dragProgress = 0;
+let curtainOpened = false;
 
-// Mouse/Touch Events for Curtain with Fluid Physics
-function handleStart(e) {
-    if (curtainOpened) return;
-    isDragging = true;
-    startX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
-    curtainLeft.style.cursor = 'grabbing';
-    curtainRight.style.cursor = 'grabbing';
-    curtainLeft.classList.add('dragging');
-    curtainRight.classList.add('dragging');
-}
-
-function handleMove(e) {
-    if (!isDragging || curtainOpened) return;
-    
-    e.preventDefault();
-    currentX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
-    const deltaX = currentX - startX;
-    const windowWidth = window.innerWidth;
-    
-    // Calculate drag progress (0 to 1)
-    dragProgress = Math.min(Math.abs(deltaX) / (windowWidth * 0.3), 1);
-    
-    // Apply organic transform with fabric stretch effect
-    const leftTransform = -dragProgress * 100;
-    const rightTransform = dragProgress * 100;
-    const stretch = 1 + (dragProgress * 0.1);
-    const skew = dragProgress * 2;
-    
-    curtainLeft.style.transform = `translateX(${leftTransform}%) scaleX(${stretch}) skewX(-${skew}deg)`;
-    curtainRight.style.transform = `translateX(${rightTransform}%) scaleX(${stretch}) skewX(${skew}deg)`;
-    
-    // Trigger opening when dragged enough
-    if (dragProgress > 0.4) {
-        openCurtains();
-    }
-}
-
-function handleEnd() {
-    if (!curtainOpened && isDragging) {
-        // Snap back with elastic effect if not opened
-        curtainLeft.style.transition = 'transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
-        curtainRight.style.transition = 'transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
-        curtainLeft.style.transform = 'translateX(0) scaleX(1) skewX(0deg)';
-        curtainRight.style.transform = 'translateX(0) scaleX(1) skewX(0deg)';
-        
-        setTimeout(() => {
-            curtainLeft.style.transition = '';
-            curtainRight.style.transition = '';
-        }, 800);
-    }
-    
-    isDragging = false;
-    curtainLeft.style.cursor = 'grab';
-    curtainRight.style.cursor = 'grab';
-    curtainLeft.classList.remove('dragging');
-    curtainRight.classList.remove('dragging');
-    dragProgress = 0;
-}
+// Click to open curtains
+stage.addEventListener('click', openCurtains);
 
 function openCurtains() {
     if (curtainOpened) return;
-    
     curtainOpened = true;
     
-    // Remove dragging class and reset transitions
-    curtainLeft.classList.remove('dragging');
-    curtainRight.classList.remove('dragging');
-    curtainLeft.style.transition = '';
-    curtainRight.style.transition = '';
+    // Animate curtain paths with GSAP for smooth gathering effect
+    gsap.to(leftCurtainPath, {
+        duration: 2,
+        attr: { d: "M 0,0 L 10,0 Q 8,50 10,100 L 0,100 Z" },
+        ease: "power2.inOut"
+    });
     
-    // Add open class for animation
-    curtainLeft.classList.add('open');
-    curtainRight.classList.add('open');
+    gsap.to(rightCurtainPath, {
+        duration: 2,
+        attr: { d: "M 90,0 L 100,0 L 100,100 L 90,100 Q 92,50 90,0 Z" },
+        ease: "power2.inOut"
+    });
     
-    // Hide swipe instruction immediately
-    if (curtainContent) {
-        curtainContent.classList.add('hidden');
-    }
+    // Add opened class to trigger CSS transitions
+    stage.classList.add('opened');
     
-    // Show reveal content after curtain animation
+    // Show names and trigger confetti after curtains start opening
     setTimeout(() => {
         revealContent.classList.add('visible');
         triggerConfetti();
@@ -122,30 +66,13 @@ function openCurtains() {
         // Auto-play music if not already playing
         if (!audioPlaying) {
             backgroundMusic.play().catch(() => {
-                // Handle autoplay restrictions
                 console.log('Autoplay prevented. User must interact with audio button.');
             });
             audioToggle.classList.add('playing');
             audioPlaying = true;
         }
-    }, 900);
+    }, 800);
 }
-
-// Add event listeners for curtain
-curtainLeft.addEventListener('mousedown', handleStart);
-curtainRight.addEventListener('mousedown', handleStart);
-curtainLeft.addEventListener('touchstart', handleStart);
-curtainRight.addEventListener('touchstart', handleStart);
-
-document.addEventListener('mousemove', handleMove);
-document.addEventListener('touchmove', handleMove);
-
-document.addEventListener('mouseup', handleEnd);
-document.addEventListener('touchend', handleEnd);
-
-// Click to open curtains
-curtainLeft.addEventListener('click', openCurtains);
-curtainRight.addEventListener('click', openCurtains);
 
 // ===================================
 // Confetti Effect
@@ -225,6 +152,22 @@ function triggerConfetti() {
 // Scratch-to-Reveal Effect
 // ===================================
 const scratchCanvases = document.querySelectorAll('.scratch-canvas');
+let allCardsRevealed = false;
+
+function revealAllCards() {
+    if (allCardsRevealed) return;
+    allCardsRevealed = true;
+    
+    scratchCanvases.forEach(canvas => {
+        canvas.style.transition = 'opacity 0.5s ease';
+        canvas.style.opacity = '0';
+        setTimeout(() => {
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            canvas.style.pointerEvents = 'none';
+        }, 500);
+    });
+}
 
 scratchCanvases.forEach(canvas => {
     const ctx = canvas.getContext('2d');
@@ -261,26 +204,35 @@ scratchCanvases.forEach(canvas => {
     
     let isScratching = false;
     let scratchPercentage = 0;
+    let isRevealed = false;
     
     function scratch(x, y) {
+        if (isRevealed) return;
+        
         ctx.globalCompositeOperation = 'destination-out';
         ctx.beginPath();
-        ctx.arc(x, y, 20, 0, Math.PI * 2);
+        ctx.arc(x, y, 30, 0, Math.PI * 2);
         ctx.fill();
         
-        // Calculate scratch percentage
+        // Calculate scratch percentage - check actual transparency
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const pixels = imageData.data;
         let transparent = 0;
-        for (let i = 3; i < imageData.data.length; i += 4) {
-            if (imageData.data[i] === 0) transparent++;
-        }
-        scratchPercentage = (transparent / (canvas.width * canvas.height)) * 100;
+        const totalPixels = canvas.width * canvas.height;
         
-        // If 50% scratched, reveal completely
-        if (scratchPercentage > 50) {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            canvas.style.opacity = '0';
-            canvas.style.transition = 'opacity 0.5s';
+        // Check every pixel's alpha channel
+        for (let i = 3; i < pixels.length; i += 4) {
+            if (pixels[i] < 128) { // Consider semi-transparent as scratched
+                transparent++;
+            }
+        }
+        
+        scratchPercentage = (transparent / totalPixels) * 100;
+        
+        // If 20% scratched, reveal all cards
+        if (scratchPercentage > 20 && !isRevealed) {
+            isRevealed = true;
+            revealAllCards();
         }
     }
     
@@ -324,7 +276,7 @@ scratchCanvases.forEach(canvas => {
         isScratching = true;
         const pos = getPosition(e);
         scratch(pos.x, pos.y);
-    });
+    }, { passive: false });
     
     canvas.addEventListener('touchmove', (e) => {
         e.preventDefault();
@@ -332,11 +284,12 @@ scratchCanvases.forEach(canvas => {
             const pos = getPosition(e);
             scratch(pos.x, pos.y);
         }
-    });
+    }, { passive: false });
     
-    canvas.addEventListener('touchend', () => {
+    canvas.addEventListener('touchend', (e) => {
+        e.preventDefault();
         isScratching = false;
-    });
+    }, { passive: false });
 });
 
 // ===================================

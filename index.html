@@ -9,6 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js"></script>
 </head>
 <body>
     <!-- Audio Toggle Button -->
@@ -25,86 +27,6 @@
 
     <!-- Curtain Reveal Section -->
     <section id="curtainSection" class="curtain-section">
-        <div class="curtain-container">
-            <!-- Left Curtain with Realistic Folds -->
-            <svg class="curtain curtain-left" id="curtainLeft" viewBox="0 0 100 100" preserveAspectRatio="none">
-                <defs>
-                    <linearGradient id="velvetGradientLeft" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" style="stop-color:#3d0000;stop-opacity:1" />
-                        <stop offset="15%" style="stop-color:#5c0000;stop-opacity:1" />
-                        <stop offset="30%" style="stop-color:#800020;stop-opacity:1" />
-                        <stop offset="45%" style="stop-color:#5c0000;stop-opacity:1" />
-                        <stop offset="60%" style="stop-color:#800020;stop-opacity:1" />
-                        <stop offset="75%" style="stop-color:#5c0000;stop-opacity:1" />
-                        <stop offset="90%" style="stop-color:#800020;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#3d0000;stop-opacity:1" />
-                    </linearGradient>
-                    <filter id="velvetTexture">
-                        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" result="noise"/>
-                        <feDiffuseLighting in="noise" lighting-color="#800020" surfaceScale="2">
-                            <feDistantLight azimuth="45" elevation="60"/>
-                        </feDiffuseLighting>
-                    </filter>
-                </defs>
-                <!-- Main curtain body with folds -->
-                <path class="curtain-fold" d="M 0,0 Q 8,10 10,0 Q 18,10 20,0 Q 28,10 30,0 Q 38,10 40,0 Q 48,10 50,0 Q 58,10 60,0 Q 68,10 70,0 Q 78,10 80,0 Q 88,10 90,0 Q 98,10 100,0 L 100,100 Q 92,95 90,100 Q 82,95 80,100 Q 72,95 70,100 Q 62,95 60,100 Q 52,95 50,100 Q 42,95 40,100 Q 32,95 30,100 Q 22,95 20,100 Q 12,95 10,100 Q 2,95 0,100 Z"
-                      fill="url(#velvetGradientLeft)"
-                      filter="url(#velvetTexture)"
-                      opacity="0.95"/>
-                <!-- Shadow folds for depth -->
-                <path d="M 10,0 Q 10,50 10,100" stroke="#000" stroke-width="0.5" opacity="0.3" fill="none"/>
-                <path d="M 30,0 Q 30,50 30,100" stroke="#000" stroke-width="0.5" opacity="0.3" fill="none"/>
-                <path d="M 50,0 Q 50,50 50,100" stroke="#000" stroke-width="0.5" opacity="0.3" fill="none"/>
-                <path d="M 70,0 Q 70,50 70,100" stroke="#000" stroke-width="0.5" opacity="0.3" fill="none"/>
-                <path d="M 90,0 Q 90,50 90,100" stroke="#000" stroke-width="0.5" opacity="0.3" fill="none"/>
-                <!-- Highlight folds for realism -->
-                <path d="M 20,0 Q 20,50 20,100" stroke="#a0304a" stroke-width="0.3" opacity="0.4" fill="none"/>
-                <path d="M 40,0 Q 40,50 40,100" stroke="#a0304a" stroke-width="0.3" opacity="0.4" fill="none"/>
-                <path d="M 60,0 Q 60,50 60,100" stroke="#a0304a" stroke-width="0.3" opacity="0.4" fill="none"/>
-                <path d="M 80,0 Q 80,50 80,100" stroke="#a0304a" stroke-width="0.3" opacity="0.4" fill="none"/>
-            </svg>
-            
-            <!-- Right Curtain with Realistic Folds -->
-            <svg class="curtain curtain-right" id="curtainRight" viewBox="0 0 100 100" preserveAspectRatio="none">
-                <defs>
-                    <linearGradient id="velvetGradientRight" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" style="stop-color:#3d0000;stop-opacity:1" />
-                        <stop offset="10%" style="stop-color:#800020;stop-opacity:1" />
-                        <stop offset="25%" style="stop-color:#5c0000;stop-opacity:1" />
-                        <stop offset="40%" style="stop-color:#800020;stop-opacity:1" />
-                        <stop offset="55%" style="stop-color:#5c0000;stop-opacity:1" />
-                        <stop offset="70%" style="stop-color:#800020;stop-opacity:1" />
-                        <stop offset="85%" style="stop-color:#5c0000;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#3d0000;stop-opacity:1" />
-                    </linearGradient>
-                </defs>
-                <!-- Main curtain body with folds -->
-                <path class="curtain-fold" d="M 0,0 Q 8,10 10,0 Q 18,10 20,0 Q 28,10 30,0 Q 38,10 40,0 Q 48,10 50,0 Q 58,10 60,0 Q 68,10 70,0 Q 78,10 80,0 Q 88,10 90,0 Q 98,10 100,0 L 100,100 Q 92,95 90,100 Q 82,95 80,100 Q 72,95 70,100 Q 62,95 60,100 Q 52,95 50,100 Q 42,95 40,100 Q 32,95 30,100 Q 22,95 20,100 Q 12,95 10,100 Q 2,95 0,100 Z"
-                      fill="url(#velvetGradientRight)"
-                      filter="url(#velvetTexture)"
-                      opacity="0.95"/>
-                <!-- Shadow folds for depth -->
-                <path d="M 10,0 Q 10,50 10,100" stroke="#000" stroke-width="0.5" opacity="0.3" fill="none"/>
-                <path d="M 30,0 Q 30,50 30,100" stroke="#000" stroke-width="0.5" opacity="0.3" fill="none"/>
-                <path d="M 50,0 Q 50,50 50,100" stroke="#000" stroke-width="0.5" opacity="0.3" fill="none"/>
-                <path d="M 70,0 Q 70,50 70,100" stroke="#000" stroke-width="0.5" opacity="0.3" fill="none"/>
-                <path d="M 90,0 Q 90,50 90,100" stroke="#000" stroke-width="0.5" opacity="0.3" fill="none"/>
-                <!-- Highlight folds for realism -->
-                <path d="M 20,0 Q 20,50 20,100" stroke="#a0304a" stroke-width="0.3" opacity="0.4" fill="none"/>
-                <path d="M 40,0 Q 40,50 40,100" stroke="#a0304a" stroke-width="0.3" opacity="0.4" fill="none"/>
-                <path d="M 60,0 Q 60,50 60,100" stroke="#a0304a" stroke-width="0.3" opacity="0.4" fill="none"/>
-                <path d="M 80,0 Q 80,50 80,100" stroke="#a0304a" stroke-width="0.3" opacity="0.4" fill="none"/>
-            </svg>
-            
-            <div class="curtain-content">
-                <div class="swipe-instruction">
-                    <p>Drag to Reveal</p>
-                    <svg class="swipe-icon" width="40" height="40" viewBox="0 0 40 40">
-                        <path d="M10 20 L20 10 L30 20 M10 20 L20 30 L30 20" stroke="currentColor" fill="none" stroke-width="2"/>
-                    </svg>
-                </div>
-            </div>
-        </div>
         <div class="reveal-content" id="revealContent">
             <div class="couple-names">
                 <h1 class="name-sam animate-in">Vignesh Kumar</h1>
@@ -119,6 +41,186 @@
                 </svg>
             </div>
         </div>
+        
+        <div id="stage">
+            <!-- SVG Curtain Container -->
+            <svg id="curtainSVG" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <defs>
+                    <!-- Rich velvet gradient with depth -->
+                    <radialGradient id="velvetBase" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" style="stop-color:#B22222;stop-opacity:1" />
+                        <stop offset="50%" style="stop-color:#8B0000;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#5C0000;stop-opacity:1" />
+                    </radialGradient>
+                    
+                    <!-- Pleat highlight gradient -->
+                    <linearGradient id="pleatHighlight" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#DC143C;stop-opacity:0.8" />
+                        <stop offset="50%" style="stop-color:#8B0000;stop-opacity:0.3" />
+                        <stop offset="100%" style="stop-color:#DC143C;stop-opacity:0.8" />
+                    </linearGradient>
+                    
+                    <!-- Pleat shadow gradient -->
+                    <linearGradient id="pleatShadow" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#000000;stop-opacity:0.8" />
+                        <stop offset="50%" style="stop-color:#000000;stop-opacity:0.3" />
+                        <stop offset="100%" style="stop-color:#000000;stop-opacity:0.8" />
+                    </linearGradient>
+                    
+                    <!-- Gold rope with metallic sheen -->
+                    <linearGradient id="goldRope" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
+                        <stop offset="30%" style="stop-color:#FFA500;stop-opacity:1" />
+                        <stop offset="70%" style="stop-color:#DAA520;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#B8860B;stop-opacity:1" />
+                    </linearGradient>
+                    
+                    <!-- Tassel gradient -->
+                    <radialGradient id="tasselGrad" cx="50%" cy="30%">
+                        <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#B8860B;stop-opacity:1" />
+                    </radialGradient>
+                </defs>
+                
+                <!-- Left Curtain Panel -->
+                <g id="leftCurtain" class="curtain-panel">
+                    <!-- Base curtain -->
+                    <path id="leftCurtainPath" d="M 0,0 L 50,0 L 50,100 L 0,100 Z"
+                          fill="url(#velvetBase)" />
+                    
+                    <!-- Detailed pleats with 3D effect -->
+                    <g class="pleats">
+                        <!-- Pleat 1 -->
+                        <path d="M 3,0 Q 4,50 3,100" stroke="url(#pleatHighlight)" stroke-width="1.2" fill="none" opacity="0.6"/>
+                        <path d="M 5,0 Q 4,50 5,100" stroke="url(#pleatShadow)" stroke-width="0.8" fill="none" opacity="0.7"/>
+                        
+                        <!-- Pleat 2 -->
+                        <path d="M 9,0 Q 10,50 9,100" stroke="url(#pleatHighlight)" stroke-width="1.2" fill="none" opacity="0.6"/>
+                        <path d="M 11,0 Q 10,50 11,100" stroke="url(#pleatShadow)" stroke-width="0.8" fill="none" opacity="0.7"/>
+                        
+                        <!-- Pleat 3 -->
+                        <path d="M 15,0 Q 16,50 15,100" stroke="url(#pleatHighlight)" stroke-width="1.2" fill="none" opacity="0.6"/>
+                        <path d="M 17,0 Q 16,50 17,100" stroke="url(#pleatShadow)" stroke-width="0.8" fill="none" opacity="0.7"/>
+                        
+                        <!-- Pleat 4 -->
+                        <path d="M 21,0 Q 22,50 21,100" stroke="url(#pleatHighlight)" stroke-width="1.2" fill="none" opacity="0.6"/>
+                        <path d="M 23,0 Q 22,50 23,100" stroke="url(#pleatShadow)" stroke-width="0.8" fill="none" opacity="0.7"/>
+                        
+                        <!-- Pleat 5 -->
+                        <path d="M 27,0 Q 28,50 27,100" stroke="url(#pleatHighlight)" stroke-width="1.2" fill="none" opacity="0.6"/>
+                        <path d="M 29,0 Q 28,50 29,100" stroke="url(#pleatShadow)" stroke-width="0.8" fill="none" opacity="0.7"/>
+                        
+                        <!-- Pleat 6 -->
+                        <path d="M 33,0 Q 34,50 33,100" stroke="url(#pleatHighlight)" stroke-width="1.2" fill="none" opacity="0.6"/>
+                        <path d="M 35,0 Q 34,50 35,100" stroke="url(#pleatShadow)" stroke-width="0.8" fill="none" opacity="0.7"/>
+                        
+                        <!-- Pleat 7 -->
+                        <path d="M 39,0 Q 40,50 39,100" stroke="url(#pleatHighlight)" stroke-width="1.2" fill="none" opacity="0.6"/>
+                        <path d="M 41,0 Q 40,50 41,100" stroke="url(#pleatShadow)" stroke-width="0.8" fill="none" opacity="0.7"/>
+                        
+                        <!-- Pleat 8 -->
+                        <path d="M 45,0 Q 46,50 45,100" stroke="url(#pleatHighlight)" stroke-width="1.2" fill="none" opacity="0.6"/>
+                        <path d="M 47,0 Q 46,50 47,100" stroke="url(#pleatShadow)" stroke-width="0.8" fill="none" opacity="0.7"/>
+                    </g>
+                    
+                    <!-- Edge shadow for depth -->
+                    <path d="M 48,0 L 50,0 L 50,100 L 48,100 Z" fill="#000000" opacity="0.5"/>
+                </g>
+                
+                <!-- Right Curtain Panel -->
+                <g id="rightCurtain" class="curtain-panel">
+                    <!-- Base curtain -->
+                    <path id="rightCurtainPath" d="M 50,0 L 100,0 L 100,100 L 50,100 Z"
+                          fill="url(#velvetBase)" />
+                    
+                    <!-- Detailed pleats with 3D effect -->
+                    <g class="pleats">
+                        <!-- Pleat 1 -->
+                        <path d="M 53,0 Q 54,50 53,100" stroke="url(#pleatHighlight)" stroke-width="1.2" fill="none" opacity="0.6"/>
+                        <path d="M 55,0 Q 54,50 55,100" stroke="url(#pleatShadow)" stroke-width="0.8" fill="none" opacity="0.7"/>
+                        
+                        <!-- Pleat 2 -->
+                        <path d="M 59,0 Q 60,50 59,100" stroke="url(#pleatHighlight)" stroke-width="1.2" fill="none" opacity="0.6"/>
+                        <path d="M 61,0 Q 60,50 61,100" stroke="url(#pleatShadow)" stroke-width="0.8" fill="none" opacity="0.7"/>
+                        
+                        <!-- Pleat 3 -->
+                        <path d="M 65,0 Q 66,50 65,100" stroke="url(#pleatHighlight)" stroke-width="1.2" fill="none" opacity="0.6"/>
+                        <path d="M 67,0 Q 66,50 67,100" stroke="url(#pleatShadow)" stroke-width="0.8" fill="none" opacity="0.7"/>
+                        
+                        <!-- Pleat 4 -->
+                        <path d="M 71,0 Q 72,50 71,100" stroke="url(#pleatHighlight)" stroke-width="1.2" fill="none" opacity="0.6"/>
+                        <path d="M 73,0 Q 72,50 73,100" stroke="url(#pleatShadow)" stroke-width="0.8" fill="none" opacity="0.7"/>
+                        
+                        <!-- Pleat 5 -->
+                        <path d="M 77,0 Q 78,50 77,100" stroke="url(#pleatHighlight)" stroke-width="1.2" fill="none" opacity="0.6"/>
+                        <path d="M 79,0 Q 78,50 79,100" stroke="url(#pleatShadow)" stroke-width="0.8" fill="none" opacity="0.7"/>
+                        
+                        <!-- Pleat 6 -->
+                        <path d="M 83,0 Q 84,50 83,100" stroke="url(#pleatHighlight)" stroke-width="1.2" fill="none" opacity="0.6"/>
+                        <path d="M 85,0 Q 84,50 85,100" stroke="url(#pleatShadow)" stroke-width="0.8" fill="none" opacity="0.7"/>
+                        
+                        <!-- Pleat 7 -->
+                        <path d="M 89,0 Q 90,50 89,100" stroke="url(#pleatHighlight)" stroke-width="1.2" fill="none" opacity="0.6"/>
+                        <path d="M 91,0 Q 90,50 91,100" stroke="url(#pleatShadow)" stroke-width="0.8" fill="none" opacity="0.7"/>
+                        
+                        <!-- Pleat 8 -->
+                        <path d="M 95,0 Q 96,50 95,100" stroke="url(#pleatHighlight)" stroke-width="1.2" fill="none" opacity="0.6"/>
+                        <path d="M 97,0 Q 96,50 97,100" stroke="url(#pleatShadow)" stroke-width="0.8" fill="none" opacity="0.7"/>
+                    </g>
+                    
+                    <!-- Edge shadow for depth -->
+                    <path d="M 50,0 L 52,0 L 52,100 L 50,100 Z" fill="#000000" opacity="0.5"/>
+                </g>
+                
+                <!-- Ornate valance at top -->
+                <g id="valance">
+                    <path d="M 0,0 Q 12.5,-1.5 25,-0.5 Q 37.5,-2 50,0 Q 62.5,-2 75,-0.5 Q 87.5,-1.5 100,0 L 100,10 Q 87.5,8 75,9 Q 62.5,7 50,10 Q 37.5,7 25,9 Q 12.5,8 0,10 Z"
+                          fill="#5C0000" opacity="0.95"/>
+                    <path d="M 0,0 Q 12.5,-1.5 25,-0.5 Q 37.5,-2 50,0 Q 62.5,-2 75,-0.5 Q 87.5,-1.5 100,0"
+                          stroke="url(#goldRope)" stroke-width="0.3" fill="none" opacity="0.8"/>
+                </g>
+                
+                <!-- Decorative gold tiebacks with tassels -->
+                <g id="leftTieback" class="tieback" opacity="0">
+                    <!-- Rope -->
+                    <ellipse cx="8" cy="50" rx="1.5" ry="12" fill="url(#goldRope)"/>
+                    <path d="M 8,38 Q 10,50 8,62" stroke="#B8860B" stroke-width="0.4" fill="none"/>
+                    <!-- Tassel -->
+                    <ellipse cx="8" cy="65" rx="2.5" ry="3" fill="url(#tasselGrad)"/>
+                    <g class="tassel-fringe">
+                        <line x1="6" y1="68" x2="5.5" y2="73" stroke="#DAA520" stroke-width="0.2"/>
+                        <line x1="7" y1="68" x2="6.8" y2="74" stroke="#DAA520" stroke-width="0.2"/>
+                        <line x1="8" y1="68" x2="8" y2="75" stroke="#DAA520" stroke-width="0.2"/>
+                        <line x1="9" y1="68" x2="9.2" y2="74" stroke="#DAA520" stroke-width="0.2"/>
+                        <line x1="10" y1="68" x2="10.5" y2="73" stroke="#DAA520" stroke-width="0.2"/>
+                    </g>
+                </g>
+                <g id="rightTieback" class="tieback" opacity="0">
+                    <!-- Rope -->
+                    <ellipse cx="92" cy="50" rx="1.5" ry="12" fill="url(#goldRope)"/>
+                    <path d="M 92,38 Q 90,50 92,62" stroke="#B8860B" stroke-width="0.4" fill="none"/>
+                    <!-- Tassel -->
+                    <ellipse cx="92" cy="65" rx="2.5" ry="3" fill="url(#tasselGrad)"/>
+                    <g class="tassel-fringe">
+                        <line x1="90" y1="68" x2="89.5" y2="73" stroke="#DAA520" stroke-width="0.2"/>
+                        <line x1="91" y1="68" x2="90.8" y2="74" stroke="#DAA520" stroke-width="0.2"/>
+                        <line x1="92" y1="68" x2="92" y2="75" stroke="#DAA520" stroke-width="0.2"/>
+                        <line x1="93" y1="68" x2="93.2" y2="74" stroke="#DAA520" stroke-width="0.2"/>
+                        <line x1="94" y1="68" x2="94.5" y2="73" stroke="#DAA520" stroke-width="0.2"/>
+                    </g>
+                </g>
+            </svg>
+            
+            <!-- Click to Reveal Instruction -->
+            <div class="curtain-instruction" id="curtainInstruction">
+                <p>Click to Reveal</p>
+                <svg class="click-icon" width="40" height="40" viewBox="0 0 40 40">
+                    <circle cx="20" cy="20" r="15" stroke="currentColor" fill="none" stroke-width="2"/>
+                    <circle cx="20" cy="20" r="5" fill="currentColor"/>
+                </svg>
+            </div>
+        </div>
+        
         <canvas id="confettiCanvas"></canvas>
     </section>
 
@@ -182,7 +284,7 @@
                 <h2 class="section-title">The Venue</h2>
                 <div class="venue-content">
                     <a href="https://maps.app.goo.gl/dB1YkiduvrD4fQXH8" target="_blank" rel="noopener noreferrer" class="venue-image-link" id="venueMap">
-                        <img src="assets/images/location.png" alt="ECR Mahal Venue" class="venue-image">
+                        <img src="assets/images/location.png?v=2" alt="ECR Mahal Venue" class="venue-image" loading="eager">
                         <div class="venue-overlay">
                             <span class="map-indicator">📍 View on Google Maps</span>
                         </div>
