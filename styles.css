@@ -1,0 +1,826 @@
+/* ===================================
+   CSS Custom Properties (Variables)
+   =================================== */
+:root {
+    /* Color Palette - Modern European Elegance */
+    --burgundy: #800020;
+    --burgundy-dark: #5c0000;
+    --burgundy-light: #a0304a;
+    --cream: #f5f5dc;
+    --ivory: #fffff0;
+    --gold: #d4af37;
+    --gold-light: #f4d03f;
+    --gold-dark: #b8860b;
+    --charcoal: #2a2a2a;
+    --white: #ffffff;
+    --black: #000000;
+    
+    /* Typography */
+    --font-serif: 'Playfair Display', serif;
+    --font-sans: 'Montserrat', sans-serif;
+    
+    /* Spacing */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 2rem;
+    --spacing-lg: 4rem;
+    --spacing-xl: 6rem;
+    
+    /* Transitions */
+    --transition-smooth: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: all 0.3s ease;
+}
+
+/* ===================================
+   Reset & Base Styles
+   =================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+body {
+    font-family: var(--font-sans);
+    color: var(--charcoal);
+    background-color: var(--ivory);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* ===================================
+   Typography
+   =================================== */
+h1, h2, h3 {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+h1 {
+    font-size: clamp(3rem, 8vw, 6rem);
+}
+
+h2 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+}
+
+h3 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+p {
+    font-size: clamp(1rem, 2vw, 1.125rem);
+    font-weight: 300;
+}
+
+/* ===================================
+   Audio Toggle Button
+   =================================== */
+.audio-toggle {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    z-index: 1000;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--burgundy);
+    border: 2px solid var(--gold);
+    color: var(--gold);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-fast);
+    box-shadow: 0 4px 15px rgba(128, 0, 32, 0.3);
+}
+
+.audio-toggle:hover {
+    background: var(--burgundy-light);
+    transform: scale(1.1);
+}
+
+.audio-toggle.playing {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* ===================================
+   Curtain Reveal Section
+   =================================== */
+.curtain-section {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background: var(--charcoal);
+}
+
+.curtain-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.curtain {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--burgundy) 0%, var(--burgundy-dark) 100%);
+    transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: grab;
+    z-index: 10;
+}
+
+.curtain:active {
+    cursor: grabbing;
+}
+
+.curtain-left {
+    left: 0;
+    transform-origin: left;
+}
+
+.curtain-right {
+    right: 0;
+    transform-origin: right;
+}
+
+.curtain.open.curtain-left {
+    transform: translateX(-100%);
+}
+
+.curtain.open.curtain-right {
+    transform: translateX(100%);
+}
+
+.curtain-texture {
+    width: 100%;
+    height: 100%;
+    background-image: 
+        repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 10px,
+            rgba(0, 0, 0, 0.1) 10px,
+            rgba(0, 0, 0, 0.1) 11px
+        );
+    opacity: 0.5;
+}
+
+.curtain-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 15;
+    text-align: center;
+}
+
+.swipe-instruction {
+    color: var(--gold);
+    font-family: var(--font-sans);
+    font-size: 1.2rem;
+    animation: fadeInOut 2s infinite;
+}
+
+.swipe-icon {
+    margin-top: 1rem;
+    color: var(--gold);
+    animation: swipeAnimation 2s infinite;
+}
+
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+@keyframes swipeAnimation {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(10px); }
+}
+
+.reveal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1s ease;
+}
+
+.reveal-content.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.couple-names {
+    margin-bottom: 2rem;
+}
+
+.name-sam, .name-sofia {
+    color: var(--gold);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.ampersand {
+    display: block;
+    font-size: 4rem;
+    color: var(--cream);
+    margin: 1rem 0;
+    font-family: var(--font-serif);
+    opacity: 0;
+    transform: scale(0);
+}
+
+.tagline {
+    color: var(--cream);
+    font-size: 1.5rem;
+    font-family: var(--font-sans);
+    font-weight: 300;
+    letter-spacing: 3px;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.animate-in {
+    animation: slideInUp 1s forwards;
+}
+
+.animate-in:nth-child(1) { animation-delay: 0.2s; }
+.animate-in:nth-child(2) { animation-delay: 0.6s; }
+.animate-in:nth-child(3) { animation-delay: 1s; }
+.animate-in:nth-child(4) { animation-delay: 1.4s; }
+
+@keyframes slideInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--gold);
+    text-align: center;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-10px); }
+}
+
+#confettiCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 20;
+}
+
+/* ===================================
+   Main Content
+   =================================== */
+.main-content {
+    position: relative;
+    background: var(--ivory);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}
+
+section {
+    padding: var(--spacing-xl) 0;
+    position: relative;
+}
+
+.section-title {
+    text-align: center;
+    color: var(--burgundy);
+    margin-bottom: var(--spacing-lg);
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 1rem auto 0;
+}
+
+/* Scroll Animations */
+.section-animate {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: var(--transition-smooth);
+}
+
+.section-animate.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ===================================
+   Save the Date - Scratch Section
+   =================================== */
+.save-date-section {
+    background: linear-gradient(135deg, var(--cream) 0%, var(--ivory) 100%);
+}
+
+.scratch-instruction {
+    text-align: center;
+    color: var(--burgundy);
+    font-size: 1.2rem;
+    margin-bottom: var(--spacing-md);
+    font-style: italic;
+}
+
+.scratch-cards {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.scratch-card {
+    position: relative;
+    width: 150px;
+    height: 180px;
+    text-align: center;
+}
+
+.scratch-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 150px;
+    height: 150px;
+    cursor: pointer;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(128, 0, 32, 0.2);
+}
+
+.scratch-reveal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    font-family: var(--font-serif);
+    color: var(--burgundy);
+    background: var(--cream);
+    border-radius: 10px;
+    border: 3px solid var(--gold);
+}
+
+.scratch-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: var(--charcoal);
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* ===================================
+   Countdown Section
+   =================================== */
+.countdown-section {
+    background: var(--burgundy);
+    color: var(--cream);
+}
+
+.countdown-section .section-title {
+    color: var(--gold);
+}
+
+.countdown-timer {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.countdown-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--spacing-md);
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid var(--gold);
+    border-radius: 10px;
+    min-width: 120px;
+    backdrop-filter: blur(10px);
+}
+
+.countdown-value {
+    font-size: 3rem;
+    font-family: var(--font-serif);
+    color: var(--gold);
+    font-weight: 700;
+    line-height: 1;
+}
+
+.countdown-label {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 0.5rem;
+    color: var(--cream);
+}
+
+/* ===================================
+   Venue Section
+   =================================== */
+.venue-section {
+    background: var(--ivory);
+}
+
+.venue-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
+    align-items: center;
+}
+
+.venue-illustration {
+    position: relative;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.venue-illustration:hover {
+    transform: scale(1.05);
+}
+
+.villa-illustration {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 10px 30px rgba(128, 0, 32, 0.2));
+    transition: var(--transition-smooth);
+}
+
+.venue-illustration:hover .villa-illustration {
+    filter: drop-shadow(0 15px 40px rgba(212, 175, 55, 0.4));
+}
+
+.venue-details {
+    text-align: left;
+}
+
+.venue-details h3 {
+    color: var(--burgundy);
+    margin-bottom: var(--spacing-sm);
+}
+
+.venue-address {
+    color: var(--gold-dark);
+    font-weight: 500;
+    margin-bottom: var(--spacing-sm);
+}
+
+.venue-description {
+    color: var(--charcoal);
+    line-height: 1.8;
+}
+
+/* ===================================
+   Dress Code Section
+   =================================== */
+.dress-code-section {
+    background: linear-gradient(135deg, var(--cream) 0%, var(--ivory) 100%);
+}
+
+.dress-code-subtitle {
+    text-align: center;
+    font-size: 1.5rem;
+    color: var(--gold-dark);
+    margin-bottom: var(--spacing-lg);
+    font-style: italic;
+}
+
+.dress-code-gallery {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dress-code-item {
+    text-align: center;
+    transition: var(--transition-smooth);
+}
+
+.dress-code-item:hover {
+    transform: translateY(-10px);
+}
+
+.dress-illustration {
+    width: 200px;
+    height: 300px;
+    filter: drop-shadow(0 5px 15px rgba(128, 0, 32, 0.2));
+    transition: var(--transition-smooth);
+}
+
+.dress-code-item:hover .dress-illustration {
+    filter: drop-shadow(0 10px 25px rgba(212, 175, 55, 0.4));
+}
+
+.dress-code-item p {
+    margin-top: var(--spacing-sm);
+    font-size: 1.2rem;
+    color: var(--burgundy);
+    font-weight: 500;
+}
+
+.dress-code-note {
+    text-align: center;
+    color: var(--charcoal);
+    font-style: italic;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* ===================================
+   RSVP Section
+   =================================== */
+.rsvp-section {
+    background: var(--burgundy);
+    color: var(--cream);
+}
+
+.rsvp-section .section-title {
+    color: var(--gold);
+}
+
+.rsvp-subtitle {
+    text-align: center;
+    color: var(--cream);
+    margin-bottom: var(--spacing-lg);
+    font-style: italic;
+}
+
+.rsvp-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: var(--spacing-xs);
+    color: var(--gold);
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid var(--gold);
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--cream);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    transition: var(--transition-fast);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--gold-light);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.radio-group {
+    display: flex;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: var(--cream);
+}
+
+.radio-label input[type="radio"] {
+    margin-right: 0.5rem;
+    cursor: pointer;
+    accent-color: var(--gold);
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 1rem 2rem;
+    background: var(--gold);
+    color: var(--burgundy);
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    font-family: var(--font-sans);
+    cursor: pointer;
+    transition: var(--transition-fast);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.submit-btn:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+}
+
+.form-message {
+    margin-top: var(--spacing-sm);
+    padding: 1rem;
+    border-radius: 5px;
+    text-align: center;
+    display: none;
+}
+
+.form-message.success {
+    background: rgba(76, 175, 80, 0.2);
+    border: 2px solid #4caf50;
+    color: #4caf50;
+    display: block;
+}
+
+.form-message.error {
+    background: rgba(244, 67, 54, 0.2);
+    border: 2px solid #f44336;
+    color: #f44336;
+    display: block;
+}
+
+/* ===================================
+   Footer
+   =================================== */
+.footer {
+    background: var(--charcoal);
+    color: var(--cream);
+    padding: var(--spacing-lg) 0;
+    text-align: center;
+}
+
+.footer-text {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    color: var(--gold);
+    margin-bottom: var(--spacing-sm);
+}
+
+.footer-date {
+    font-size: 1.2rem;
+    color: var(--cream);
+    margin-bottom: var(--spacing-md);
+}
+
+.footer-divider {
+    width: 100px;
+    height: 2px;
+    background: var(--gold);
+    margin: var(--spacing-md) auto;
+}
+
+.footer-note {
+    color: var(--cream);
+    font-style: italic;
+}
+
+/* ===================================
+   Responsive Design
+   =================================== */
+@media (max-width: 768px) {
+    :root {
+        --spacing-lg: 3rem;
+        --spacing-xl: 4rem;
+    }
+    
+    .audio-toggle {
+        top: 1rem;
+        right: 1rem;
+        width: 45px;
+        height: 45px;
+    }
+    
+    .venue-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .countdown-item {
+        min-width: 80px;
+    }
+    
+    .countdown-value {
+        font-size: 2rem;
+    }
+    
+    .scratch-card {
+        width: 120px;
+        height: 150px;
+    }
+    
+    .scratch-canvas,
+    .scratch-reveal {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .scratch-reveal {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 var(--spacing-sm);
+    }
+    
+    section {
+        padding: var(--spacing-lg) 0;
+    }
+    
+    .dress-code-gallery {
+        gap: var(--spacing-md);
+    }
+    
+    .dress-illustration {
+        width: 150px;
+        height: 225px;
+    }
+}
+
+/* ===================================
+   Accessibility
+   =================================== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Focus styles for keyboard navigation */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid var(--gold);
+    outline-offset: 2px;
+}
+
+/* Made with Bob */

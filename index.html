@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Vignesh Kumar & Venmani Sekar's Wedding - May 08, 2026">
+    <title>Vignesh Kumar & Venmani Sekar | Wedding Invitation</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Audio Toggle Button -->
+    <button id="audioToggle" class="audio-toggle" aria-label="Toggle music">
+        <svg class="audio-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M9 18V5l12-2v13"></path>
+            <circle cx="6" cy="18" r="3"></circle>
+            <circle cx="18" cy="16" r="3"></circle>
+        </svg>
+    </button>
+    <audio id="backgroundMusic" loop>
+        <source src="assets/audio/romantic-instrumental.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Curtain Reveal Section -->
+    <section id="curtainSection" class="curtain-section">
+        <div class="curtain-container">
+            <div class="curtain curtain-left" id="curtainLeft">
+                <div class="curtain-texture"></div>
+            </div>
+            <div class="curtain curtain-right" id="curtainRight">
+                <div class="curtain-texture"></div>
+            </div>
+            <div class="curtain-content">
+                <div class="swipe-instruction">
+                    <p>Swipe to Open</p>
+                    <svg class="swipe-icon" width="40" height="40" viewBox="0 0 40 40">
+                        <path d="M10 20 L20 10 L30 20 M10 20 L20 30 L30 20" stroke="currentColor" fill="none" stroke-width="2"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div class="reveal-content" id="revealContent">
+            <div class="couple-names">
+                <h1 class="name-sam animate-in">Vignesh Kumar</h1>
+                <span class="ampersand animate-in">&</span>
+                <h1 class="name-sofia animate-in">Venmani Sekar</h1>
+            </div>
+            <p class="tagline animate-in">Together Forever</p>
+            <div class="scroll-indicator">
+                <span>Scroll Down</span>
+                <svg width="20" height="20" viewBox="0 0 20 20">
+                    <path d="M10 5 L10 15 M5 10 L10 15 L15 10" stroke="currentColor" fill="none" stroke-width="2"/>
+                </svg>
+            </div>
+        </div>
+        <canvas id="confettiCanvas"></canvas>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Save the Date Section -->
+        <section class="save-date-section section-animate">
+            <div class="container">
+                <h2 class="section-title">Save the Date</h2>
+                <div class="scratch-container">
+                    <p class="scratch-instruction">Scratch to reveal the date</p>
+                    <div class="scratch-cards">
+                        <div class="scratch-card">
+                            <canvas class="scratch-canvas" data-reveal="08"></canvas>
+                            <div class="scratch-reveal">08</div>
+                            <p class="scratch-label">Day</p>
+                        </div>
+                        <div class="scratch-card">
+                            <canvas class="scratch-canvas" data-reveal="May"></canvas>
+                            <div class="scratch-reveal">May</div>
+                            <p class="scratch-label">Month</p>
+                        </div>
+                        <div class="scratch-card">
+                            <canvas class="scratch-canvas" data-reveal="2026"></canvas>
+                            <div class="scratch-reveal">2026</div>
+                            <p class="scratch-label">Year</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Countdown Section -->
+        <section class="countdown-section section-animate">
+            <div class="container">
+                <h2 class="section-title">Counting Down</h2>
+                <div class="countdown-timer" id="countdown">
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="days">000</span>
+                        <span class="countdown-label">Days</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="hours">00</span>
+                        <span class="countdown-label">Hours</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="minutes">00</span>
+                        <span class="countdown-label">Minutes</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="seconds">00</span>
+                        <span class="countdown-label">Seconds</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Venue Section -->
+        <section class="venue-section section-animate">
+            <div class="container">
+                <h2 class="section-title">The Venue</h2>
+                <div class="venue-content">
+                    <div class="venue-illustration" id="venueMap">
+                        <svg class="villa-illustration" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Villa Building -->
+                            <rect x="100" y="120" width="200" height="120" fill="#f5f5dc" stroke="#8b4513" stroke-width="2"/>
+                            <!-- Roof -->
+                            <polygon points="90,120 200,60 310,120" fill="#8b0000" stroke="#5c0000" stroke-width="2"/>
+                            <!-- Windows -->
+                            <rect x="130" y="150" width="30" height="40" fill="#4a4a4a" stroke="#2a2a2a" stroke-width="1"/>
+                            <rect x="185" y="150" width="30" height="40" fill="#4a4a4a" stroke="#2a2a2a" stroke-width="1"/>
+                            <rect x="240" y="150" width="30" height="40" fill="#4a4a4a" stroke="#2a2a2a" stroke-width="1"/>
+                            <!-- Door -->
+                            <rect x="175" y="200" width="50" height="40" fill="#5c3317" stroke="#3a1f0f" stroke-width="2"/>
+                            <!-- Trees -->
+                            <circle cx="50" cy="180" r="25" fill="#228b22"/>
+                            <rect x="45" y="180" width="10" height="60" fill="#8b4513"/>
+                            <circle cx="350" cy="180" r="25" fill="#228b22"/>
+                            <rect x="345" y="180" width="10" height="60" fill="#8b4513"/>
+                            <!-- Ground -->
+                            <rect x="0" y="240" width="400" height="60" fill="#90ee90"/>
+                            <!-- Click indicator -->
+                            <text x="200" y="280" text-anchor="middle" fill="#8b0000" font-size="14" font-weight="bold">Click to view on map</text>
+                        </svg>
+                    </div>
+                    <div class="venue-details">
+                        <h3>ECR Mahal</h3>
+                        <p class="venue-address">Veppampattu<br>Chennai, Tamil Nadu, India</p>
+                        <p class="venue-description">An elegant venue along the scenic East Coast Road, offering a perfect blend of traditional charm and modern amenities.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dress Code Section -->
+        <section class="dress-code-section section-animate">
+            <div class="container">
+                <h2 class="section-title">Dress Code</h2>
+                <p class="dress-code-subtitle">Formal Attire</p>
+                <div class="dress-code-gallery">
+                    <div class="dress-code-item">
+                        <svg class="dress-illustration" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Men's Suit -->
+                            <rect x="50" y="80" width="100" height="180" fill="#1a1a1a" stroke="#000" stroke-width="2"/>
+                            <rect x="70" y="80" width="60" height="180" fill="#fff" stroke="#000" stroke-width="1"/>
+                            <polygon points="100,80 85,100 115,100" fill="#8b0000"/>
+                            <circle cx="100" cy="40" r="25" fill="#f5deb3" stroke="#000" stroke-width="2"/>
+                        </svg>
+                        <p>Gentlemen</p>
+                    </div>
+                    <div class="dress-code-item">
+                        <svg class="dress-illustration" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Women's Gown -->
+                            <path d="M 100 80 L 60 120 L 50 260 L 150 260 L 140 120 Z" fill="#8b0000" stroke="#5c0000" stroke-width="2"/>
+                            <path d="M 100 80 L 80 100 L 120 100 Z" fill="#f5deb3" stroke="#000" stroke-width="1"/>
+                            <circle cx="100" cy="40" r="25" fill="#f5deb3" stroke="#000" stroke-width="2"/>
+                            <path d="M 70 120 L 50 140 M 130 120 L 150 140" stroke="#5c0000" stroke-width="3" fill="none"/>
+                        </svg>
+                        <p>Ladies</p>
+                    </div>
+                </div>
+                <p class="dress-code-note">We kindly request formal evening attire. Think elegant gowns and sharp suits.</p>
+            </div>
+        </section>
+
+        <!-- RSVP Section -->
+        <section class="rsvp-section section-animate">
+            <div class="container">
+                <h2 class="section-title">RSVP</h2>
+                <p class="rsvp-subtitle">Kindly respond by April 15, 2026</p>
+                <form id="rsvpForm" class="rsvp-form">
+                    <div class="form-group">
+                        <label for="guestName">Full Name *</label>
+                        <input type="text" id="guestName" name="guestName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Will you be attending? *</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="attendance" value="yes" required>
+                                <span>Joyfully Accept</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="attendance" value="no">
+                                <span>Regretfully Decline</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group" id="guestCountGroup" style="display: none;">
+                        <label for="guestCount">Number of Guests</label>
+                        <select id="guestCount" name="guestCount">
+                            <option value="1">1 Guest</option>
+                            <option value="2">2 Guests</option>
+                            <option value="3">3 Guests</option>
+                            <option value="4">4 Guests</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="submit-btn">Send RSVP</button>
+                    <div id="formMessage" class="form-message"></div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <p class="footer-text">With love, Vignesh Kumar & Venmani Sekar</p>
+                <p class="footer-date">May 08, 2026</p>
+                <div class="footer-divider"></div>
+                <p class="footer-note">We can't wait to celebrate with you!</p>
+            </div>
+        </footer>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
