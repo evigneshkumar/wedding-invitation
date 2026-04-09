@@ -607,12 +607,18 @@ section {
     right: 0;
     background: linear-gradient(to top, rgba(128, 0, 32, 0.9), transparent);
     padding: var(--spacing-md);
-    transform: translateY(100%);
+    transform: translateY(0);
     transition: var(--transition-smooth);
 }
 
-.venue-image-link:hover .venue-overlay {
-    transform: translateY(0);
+@media (hover: hover) {
+    .venue-overlay {
+        transform: translateY(100%);
+    }
+
+    .venue-image-link:hover .venue-overlay {
+        transform: translateY(0);
+    }
 }
 
 .map-indicator {

@@ -21,14 +21,10 @@ audioToggle.addEventListener('click', () => {
 });
 
 // ===================================
-// Curtain Reveal Effect with GSAP
+// Curtain Reveal Effect
 // ===================================
-gsap.registerPlugin(Draggable);
-
 const leftCurtain = document.querySelector("#leftCurtain");
 const rightCurtain = document.querySelector("#rightCurtain");
-const leftCurtainPath = document.querySelector("#leftCurtainPath");
-const rightCurtainPath = document.querySelector("#rightCurtainPath");
 const revealContent = document.getElementById('revealContent');
 const confettiCanvas = document.getElementById('confettiCanvas');
 const stage = document.getElementById('stage');
@@ -41,28 +37,16 @@ stage.addEventListener('click', openCurtains);
 function openCurtains() {
     if (curtainOpened) return;
     curtainOpened = true;
-    
-    // Animate curtain paths with GSAP for smooth gathering effect
-    gsap.to(leftCurtainPath, {
-        duration: 2,
-        attr: { d: "M 0,0 L 10,0 Q 8,50 10,100 L 0,100 Z" },
-        ease: "power2.inOut"
-    });
-    
-    gsap.to(rightCurtainPath, {
-        duration: 2,
-        attr: { d: "M 90,0 L 100,0 L 100,100 L 90,100 Q 92,50 90,0 Z" },
-        ease: "power2.inOut"
-    });
-    
-    // Add opened class to trigger CSS transitions
+
+    // Add the opened class to trigger the CSS transitions
+    // This handles the smooth scaling and translation of the entire curtain group
     stage.classList.add('opened');
-    
+
     // Show names and trigger confetti after curtains start opening
     setTimeout(() => {
         revealContent.classList.add('visible');
         triggerConfetti();
-        
+
         // Auto-play music if not already playing
         if (!audioPlaying) {
             backgroundMusic.play().catch(() => {
